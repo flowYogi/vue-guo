@@ -33,32 +33,13 @@ const webpackConfig = {
   },
   module: {
     rules: [
-
       {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract({fallbackLoader: 'style-loader', loader: 'css!less!postcss'})
       },
-      // {
-      //     test: /\.js$/,
-      //     exclude: [
-      //         path.resolve(__dirname, "www/ssr/src/less"),
-      //         /node_modules/
-      //     ],
-      //     loader: 'babel-loader',
-      //     options: {
-      //         presets: ['es2015', 'stage-0'],
-      //         plugins: [
-      //             "transform-decorators-legacy",
-      //             "transform-class-properties"
-      //         ]
-      //     }
-      // },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
-        exclude: [
-          path.resolve(__dirname, "www/ssr/src/less")
-        ]
+        loader: 'vue-loader'
       },
 
       // Load images
@@ -78,7 +59,7 @@ const webpackConfig = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({//主要作用是把那些共同要引用的库都给提取到公共的部分，这样我们在拿文件的时候就不会再次绑定了，而是到manifest里头看，然后取那
-      names: ['utils','vendor','manifest'],//['vendor','utils','manifest']?? wait for test..
+      names: ['vendor','manifest'],//['vendor','manifest']?? wait for test..
       // name: 'vendor',
       // minChunks: Infinity,
       // // children: true,
@@ -117,7 +98,7 @@ const webpackConfig = {
     ],
     extensions: [ '.less','.vue', '.js', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.common.js',//todo vux-loader
+      'vue$': 'vue/dist/vue.common.js',
       'activities': `${rootPath}/src/activities`,
       'components': `${rootPath}/src/components`,
       'less':`${rootPath}/src/less`,
